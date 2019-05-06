@@ -58,14 +58,27 @@ public class LivingRock extends Rock implements Moveable {
 }
 
 class Ball extends Thing implements Moveable {
+  float r = random(255);
+  float g = random(255);
+  float b = random(255);
+  float r1 = random(255);
+  float g1 = random(255);
+  float b1 = random(255);
+  float r2 = random(255);
+  float g2 = random(255);
+  float b2 = random(255);
   Ball(float x, float y) {
 
     super(x, y);
   }
 
   void display() {
-    fill(255, 0, 0);
-    ellipse(x, y, 50, 50);
+    fill(r, g, b);
+    arc(x, y, 50, 50, radians(90), radians(90)+2*THIRD_PI, PIE);
+    fill(r1, g1, b1);
+    arc(x, y, 50, 50, radians(210), radians(210)+2*THIRD_PI, PIE);
+    fill(r2, g2, b2);
+    arc(x, y, 50, 50, radians(330), radians(330)+2*THIRD_PI, PIE);
   }
 
   void move() {
