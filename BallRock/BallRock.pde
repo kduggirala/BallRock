@@ -23,6 +23,12 @@ class Rock extends Thing {
 
   void display() { 
     /* ONE PERSON WRITE THIS */
+    fill(0,200,30);
+    rect(x,y,50,50);
+    fill(18);
+    rect(x + 10, y + 10, 7, 16);
+    rect(x + 30, y + 10, 7, 16);
+    line(x + 15, y + 40, x + 35, y + 40);
   }
 }
 
@@ -43,6 +49,7 @@ class Ball extends Thing implements Moveable {
 
   void display() {
     /* ONE PERSON WRITE THIS */
+    
   }
 
   void move() {
