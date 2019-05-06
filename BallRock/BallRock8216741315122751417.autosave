@@ -23,12 +23,6 @@ class Rock extends Thing {
 
   void display() { 
     /* ONE PERSON WRITE THIS */
-    fill(0,200,30);
-    rect(x,y,50,50);
-    fill(18);
-    rect(x + 10, y + 10, 7, 16);
-    rect(x + 30, y + 10, 7, 16);
-    line(x + 15, y + 40, x + 35, y + 40);
   }
 }
 
@@ -36,14 +30,14 @@ public class LivingRock extends Rock implements Moveable {
   int xd, yd;
   LivingRock(float x, float y) {
     super(x, y);
-    xd = yd =  10;
+    xd = yd = 10;
   }
   void move() {
-   if (x >= width - 35|| x <= 0) {
+    if (x >= width || x <= 0) {
       xd *= -1;
     }
-    if (y >= height - 35 || y <= 0) {
-      yd *= -1;
+    if (y >= height || y <= 0) {
+      yd += -1;
     }
     x += xd;
     y += yd;
