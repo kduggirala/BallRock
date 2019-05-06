@@ -34,19 +34,23 @@ class Rock extends Thing {
 
 public class LivingRock extends Rock implements Moveable {
   int xd, yd;
+  String movement;
   LivingRock(float x, float y) {
     super(x, y);
     xd = yd =  10;
+    movement = "bounce";
   }
   void move() {
-   if (x >= width - 35|| x <= 0) {
-      xd *= -1;
-    }
-    if (y >= height - 35 || y <= 0) {
-      yd *= -1;
-    }
-    x += xd;
-    y += yd;
+      if (movement == "bounce") {
+        if (x >= width - 35|| x <= 0) {
+          xd *= -1;
+        }
+        if (y >= height - 35 || y <= 0) {
+          yd *= -1;
+        }
+        x += xd;
+        y += yd;
+      }
   }
 }
 
