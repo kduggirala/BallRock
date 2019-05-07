@@ -2,11 +2,11 @@
 
 ## Individual code:
 * Kevin --> Rock display
-* Kieran --> Rock move
+* Kiran --> Rock move
 * Taejoon --> Ball display
 * Minuk --> Ball move
 
 
 ## Pair code:
-* Kevin and Kieran --> Rock Changes and living rock changes
+* Kevin and Kiran --> Rock Changes and living rock changes (random choice of image and eyes)
 * Taejoon and Minuk --> General changes and ball changes
