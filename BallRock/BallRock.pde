@@ -32,7 +32,7 @@ class Rock extends Thing {
     */
     PImage img = loadImage("hellokitty.jpg");
     image(img,x,y,50,50);
-  }
+  }set
 }
 
 public class LivingRock extends Rock implements Moveable {
@@ -86,6 +86,40 @@ class Ball extends Thing implements Moveable {
   }
 }
 
+class colorChangingBall extends Ball{
+  colorChangingBall(float x, float y){
+    super(x, y); 
+  }
+  
+  void move(){
+    super();
+    for( Collideable c : ListOfCollideables) {
+     if ( c.isTouching(this){
+        float r = random(255);
+        float g = random(255);
+        float b = random(255);
+        float r1 = random(255);
+        float g1 = random(255);
+        float b1 = random(255);
+        float r2 = random(255);
+        float g2 = random(255);
+        float b2 = random(255);
+      }
+    }
+  }
+}
+
+class sizeChangingBall extends Ball{
+ sizeChangingBall(float x, y){
+   super(x, y);
+ }
+ 
+ void move(){
+   super();
+   if 
+ }
+}
+
 /*DO NOT EDIT THE REST OF THIS */
 
 ArrayList<Displayable> thingsToDisplay;
@@ -96,10 +130,15 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
+  for (int i = 0; i < 5; i++){
+     Ball b = new colorChangingBall(50+random(width-100), 50+random(height-100));
+     thingsToDisplay.add(b);
+     thingsToMove.add(b);
+     Ball b1 = new sizeChangingBall(50+random(width-100), 50+random(height-100));
+     thingsToDisplay.add(b1);
+     thingsToMove.add(b1);
+  }
   for (int i = 0; i < 10; i++) {
-    Ball b = new Ball(50+random(width-100), 50+random(height-100));
-    thingsToDisplay.add(b);
-    thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
   }
