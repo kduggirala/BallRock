@@ -17,8 +17,16 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
+  PImage img;
   Rock(float x, float y) {
     super(x, y);
+    if ((int) random (2) == 1) {
+      img = loadImage("ro.jpg");
+      
+    }
+    else {
+      img = loadImage("rock.jpg");
+    }
   }
 
   void display() { 
@@ -30,7 +38,6 @@ class Rock extends Thing {
     rect(x + 30, y + 10, 7, 16);
     line(x + 15, y + 40, x + 35, y + 40);
     */
-    PImage img = loadImage("ro.jpg");
     image(img,x,y,50,50);
   }
 }
