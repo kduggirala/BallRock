@@ -30,7 +30,7 @@ class Rock extends Thing {
     rect(x + 30, y + 10, 7, 16);
     line(x + 15, y + 40, x + 35, y + 40);
     */
-    PImage img = loadImage("hellokitty.jpg");
+    PImage img = loadImage("ro.jpg");
     image(img,x,y,50,50);
   }
 }
@@ -42,6 +42,14 @@ public class LivingRock extends Rock implements Moveable {
     super(x, y);
     xd = yd =  10;
     movement = "bounce";
+  }
+  @Override
+  void display() {
+    super.display();
+    fill(255,100,0);
+    rect(x + 10, y + 10, 7, 10);
+    rect(x + 30, y + 10, 7, 10);
+    line(x + 15, y + 40, x + 35, y + 40);
   }
   void move() {
       if (movement == "bounce") {
