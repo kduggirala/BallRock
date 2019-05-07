@@ -73,6 +73,8 @@ public class LivingRock extends Rock implements Moveable {
 }
 
 class Ball extends Thing implements Moveable {
+  int dy;
+  int dx;
   float r = random(255);
   float g = random(255);
   float b = random(255);
@@ -97,10 +99,21 @@ class Ball extends Thing implements Moveable {
   }
 
   void move() {
-    /* ONE PERSON WRITE THIS */
+    bounce();
   }
-}
-
+  void bounce(){
+    int maxheight = height;
+    if (y <= 0 || height >= maxheight){
+      dy *= -1;
+    }
+    if (x >= width){
+      dx *= -1;
+    }
+    x += dx;
+    y += dy;
+    maxheight -= 100;
+    }
+  }
 /*DO NOT EDIT THE REST OF THIS */
 
 ArrayList<Displayable> thingsToDisplay;
