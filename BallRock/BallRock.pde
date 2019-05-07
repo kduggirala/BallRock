@@ -43,9 +43,6 @@ class Rock extends Thing implements Collidable {
     line(x + 15, y + 40, x + 35, y + 40);
     */
     image(img,x,y,50,50);
-<<<<<<< HEAD
-  }set
-=======
   }
   
   boolean isTouching(Thing other) {
@@ -53,7 +50,6 @@ class Rock extends Thing implements Collidable {
     float ydist = abs(y - other.y);
     return xdist < 50 && ydist < 50;
   }
->>>>>>> e7294811b2f00996fc8026ab8d1dfbf439ec4900
 }
 
 public class LivingRock extends Rock implements Moveable {
@@ -127,20 +123,17 @@ class Ball extends Thing implements Moveable {
     y += dy;
     maxheight -= 100;
     }
-  }
-<<<<<<< HEAD
-=======
 }
 
-class colorChangingBall extends Ball{
-  colorChangingBall(float x, float y){
-    super(x, y); 
+  class colorChangingBall extends Ball{
+    colorChangingBall(float x, float y){
+      super(x, y); 
   }
   
   void move(){
-    super();
+    super.move();
     for( Collideable c : ListOfCollideables) {
-     if ( c.isTouching(this){
+     if ( c.isTouching(this)){
         float r = random(255);
         float g = random(255);
         float b = random(255);
@@ -156,17 +149,15 @@ class colorChangingBall extends Ball{
 }
 
 class sizeChangingBall extends Ball{
- sizeChangingBall(float x, y){
+ sizeChangingBall(float x, float y){
    super(x, y);
  }
  
  void move(){
-   super();
-   if 
+   super.move();
  }
 }
 
->>>>>>> 27c0e6402e4a9caaecf660d90c01e3d9622baa38
 /*DO NOT EDIT THE REST OF THIS */
 
 ArrayList<Displayable> thingsToDisplay;
