@@ -17,8 +17,16 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
+  PImage img;
   Rock(float x, float y) {
     super(x, y);
+    if ((int) random (2) == 1) {
+      img = loadImage("ro.jpg");
+      
+    }
+    else {
+      img = loadImage("rock.jpg");
+    }
   }
 
   void display() { 
@@ -30,7 +38,6 @@ class Rock extends Thing {
     rect(x + 30, y + 10, 7, 16);
     line(x + 15, y + 40, x + 35, y + 40);
     */
-    PImage img = loadImage("hellokitty.jpg");
     image(img,x,y,50,50);
   }set
 }
@@ -42,6 +49,14 @@ public class LivingRock extends Rock implements Moveable {
     super(x, y);
     xd = yd =  10;
     movement = "bounce";
+  }
+  @Override
+  void display() {
+    super.display();
+    fill(255,100,0);
+    rect(x + 10, y + 10, 7, 10);
+    rect(x + 30, y + 10, 7, 10);
+    line(x + 15, y + 40, x + 35, y + 40);
   }
   void move() {
       if (movement == "bounce") {
