@@ -6,6 +6,10 @@ interface Moveable {
   void move();
 }
 
+interface Collidable {
+  boolean isTouching(Thing other);
+}
+
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
 
@@ -16,7 +20,7 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
-class Rock extends Thing {
+class Rock extends Thing implements Collidable {
   PImage img;
   Rock(float x, float y) {
     super(x, y);
@@ -39,6 +43,12 @@ class Rock extends Thing {
     line(x + 15, y + 40, x + 35, y + 40);
     */
     image(img,x,y,50,50);
+  }
+  
+  boolean isTouching(Thing other) {
+    float xdist = abs(x - other.x);
+    float ydist = abs(y - other.y);
+    return xdist < 50 && ydist < 50;
   }
 }
 
@@ -105,6 +115,7 @@ class Ball extends Thing implements Moveable {
 
 ArrayList<Displayable> thingsToDisplay;
 ArrayList<Moveable> thingsToMove;
+ArrayList<Collidable> listOfCollidables;
 
 void setup() {
   size(1000, 800);
@@ -117,11 +128,13 @@ void setup() {
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
+    listOfCollidables.add(r);
   }
 
   LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100));
   thingsToDisplay.add(m);
   thingsToMove.add(m);
+  listOfCollidables.add(m);
 }
 
 void draw() {
