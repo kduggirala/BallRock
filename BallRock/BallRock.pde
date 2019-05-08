@@ -12,7 +12,6 @@ interface Collideable {
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
-
   Thing(float x, float y) {
     this.x = x;
     this.y = y;
@@ -26,7 +25,6 @@ class Rock extends Thing implements Collideable {
     super(x, y);
     if ((int) random (2) == 1) {
       img = loadImage("ro.jpg");
-      
     }
     else {
       img = loadImage("rock.jpg");
@@ -58,7 +56,6 @@ public class LivingRock extends Rock implements Moveable {
   float t;
   float r;
   LivingRock(float x, float y) {
-    
     super(x, y);
     r = dist(x,y,height/2,width/2);
     xd = yd =  10;
@@ -93,56 +90,45 @@ public class LivingRock extends Rock implements Moveable {
 }
 
 class Ball extends Thing implements Moveable {
-  int dy;
-  int dx;
-  float r = random(255);
-  float g = random(255);
-  float b = random(255);
-  float r1 = random(255);
-  float g1 = random(255);
-  float b1 = random(255);
-  float r2 = random(255);
-  float g2 = random(255);
-  float b2 = random(255);
-  float n = random(3);
+  float dy;
+  float dx;
+  String colur;
   Ball(float x, float y) {
-
     super(x, y);
-  }
-
-  void display() {
-    if(n < 1){
-      fill(r, g, b);
-      arc(x, y, 50, 50, radians(90), radians(90)+2*THIRD_PI, PIE);
-      fill(r1, g1, b1);
-      arc(x, y, 50, 50, radians(210), radians(210)+2*THIRD_PI, PIE);
-      fill(r2, g2, b2);
-      arc(x, y, 50, 50, radians(330), radians(330)+2*THIRD_PI, PIE);
-    }
-    else if(n < 2){
-      PImage img = loadImage("1-17907_free-background-basketball-cliparts-download-free-basketball-clipart.png.jpeg");
-      image(img, x, y, 50, 50);
+    if ((int) random (2) == 1) {
+      colur = "red";
     }
     else{
-      fill(r, g, b);
-      ellipse(x, y, 50, 50);
+      colur = "blue";
+    }
+    dy = dx= 10;
+  }
+  void display() {
+    if (colur == "red"){
+      fill(255, 0, 0);
+      arc(x, y, 50, 50, radians(0), radians(360), PIE);
+    }
+    else{
+      fill(0, 0, 255);
+      arc(x, y, 50, 50, radians(0), radians(360), PIE);
     }
   }
-
+  
   void move() {
     bounce();
   }
+  
   void bounce(){
-    int maxheight = height;
-    if (y <= 0 || height >= maxheight){
+    if (y <= 0 || height <= y){
+      dy = random(0,10);
       dy *= -1;
     }
-    if (x >= width){
+    if (x >= width || x <= 0){
+      dx = random(0,10);
       dx *= -1;
     }
     x += dx;
     y += dy;
-    maxheight -= 100;
     }
 }
 
@@ -151,8 +137,8 @@ class Ball extends Thing implements Moveable {
       super(x, y); 
   }
   
-  void move(){
-    super.move();
+  void display(){
+    super.display();
     for( Collideable c : ListOfCollideables) {
      if ( c.isTouching(this)){
         float r = random(255);
