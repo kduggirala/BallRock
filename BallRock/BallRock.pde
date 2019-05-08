@@ -104,18 +104,29 @@ class Ball extends Thing implements Moveable {
   float r2 = random(255);
   float g2 = random(255);
   float b2 = random(255);
+  float n = random(3);
   Ball(float x, float y) {
 
     super(x, y);
   }
 
   void display() {
-    fill(r, g, b);
-    arc(x, y, 50, 50, radians(90), radians(90)+2*THIRD_PI, PIE);
-    fill(r1, g1, b1);
-    arc(x, y, 50, 50, radians(210), radians(210)+2*THIRD_PI, PIE);
-    fill(r2, g2, b2);
-    arc(x, y, 50, 50, radians(330), radians(330)+2*THIRD_PI, PIE);
+    if(n < 1){
+      fill(r, g, b);
+      arc(x, y, 50, 50, radians(90), radians(90)+2*THIRD_PI, PIE);
+      fill(r1, g1, b1);
+      arc(x, y, 50, 50, radians(210), radians(210)+2*THIRD_PI, PIE);
+      fill(r2, g2, b2);
+      arc(x, y, 50, 50, radians(330), radians(330)+2*THIRD_PI, PIE);
+    }
+    else if(n < 2){
+      PImage img = loadImage("1-17907_free-background-basketball-cliparts-download-free-basketball-clipart.png.jpeg");
+      image(img, x, y, 50, 50);
+    }
+    else{
+      fill(r, g, b);
+      ellipse(x, y, 50, 50);
+    }
   }
 
   void move() {

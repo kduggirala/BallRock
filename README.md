@@ -1,10 +1,10 @@
 # BallRock
 
 ## Individual code:
-* Kevin --> Rock display
-* Kiran --> Rock move
-* Taejoon --> Ball display
-* Minuk --> Ball move
+* Kevin --> initial Rock display, livingRock move, load image as Rock, draw eyes on top
+* Kiran --> initial Rock move, use two different image files, Collideable interface, isTouching
+* Taejoon --> initial Ball display, made balls change color to red upon contact
+* Minuk --> Ball move, bounce, subclasses, 
 
 
 ## Pair code:
