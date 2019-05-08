@@ -55,10 +55,15 @@ class Rock extends Thing implements Collideable {
 public class LivingRock extends Rock implements Moveable {
   int xd, yd;
   String movement;
+  float t;
+  float r;
   LivingRock(float x, float y) {
+    
     super(x, y);
+    r = dist(x,y,height/2,width/2);
     xd = yd =  10;
-    movement = "bounce";
+    t = 0;
+    movement = "circle";
   }
   @Override
   void display() {
@@ -78,6 +83,11 @@ public class LivingRock extends Rock implements Moveable {
         }
         x += xd;
         y += yd;
+      }
+      if (movement == "circle") {
+      float t = millis()/1000.0f;
+      x = (int)(50+r*cos(t));
+      y = (int)(50+r*sin(t));
       }
   }
 }
