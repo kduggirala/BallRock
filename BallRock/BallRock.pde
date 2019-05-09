@@ -146,30 +146,25 @@ class Ball extends Thing implements Moveable {
     colorChangingBall(float x, float y){
       super(x, y); 
   }
+  void changecolor(){
+   fill(0,0,0);
+  }
   
   void display(){
     super.display();
     for( Collideable c : ListOfCollideables) {
      if ( c.isTouching(this)){
-        float r = random(255);
-        float g = random(255);
-        float b = random(255);
-        float r1 = random(255);
-        float g1 = random(255);
-        float b1 = random(255);
-        float r2 = random(255);
-        float g2 = random(255);
-        float b2 = random(255);
-      }
+       changecolor();
+       arc(x, y, 50, 50, radians(0), radians(360), PIE);
     }
   }
-}
+ }
+  }
 
 class sizeChangingBall extends Ball{
- sizeChangingBall(float x, float y){
-   super(x, y);
- }
- 
+   sizeChangingBall(float x, float y){
+     super(x, y);
+   }
  void move(){
    super.move();
  }
