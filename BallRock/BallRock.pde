@@ -101,7 +101,7 @@ class Ball extends Thing implements Moveable {
     else{
       colur = "blue";
     }
-    dy = dx= 10;
+    dy = dx= 10;//initial
   }
   void display() {
     if (colur == "red"){
@@ -120,12 +120,22 @@ class Ball extends Thing implements Moveable {
   
   void bounce(){
     if (y <= 0 || height <= y){
-      dy = random(0,10);
-      dy *= -1;
+      if (dy > 0){
+        dy = random(5,10);
+        dy *= -1;
+      }
+      else{
+        dy = random(5,10);
+      }
     }
     if (x >= width || x <= 0){
-      dx = random(0,10);
-      dx *= -1;
+      if (dx > 0){
+        dx = random(5,10);
+        dx *= -1;
+      }
+      else{
+        dx = random(5,10);
+      }
     }
     x += dx;
     y += dy;
