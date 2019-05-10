@@ -121,19 +121,23 @@ class Ball extends Thing implements Moveable {
   void bounce(){
     if (y <= 0 || height <= y){
       if (dy > 0){
+        y = height;
         dy = random(5,10);
         dy *= -1;
       }
       else{
         dy = random(5,10);
+        y = 0;
       }
     }
     if (x >= width || x <= 0){
       if (dx > 0){
+        x = width;
         dx = random(5,10);
         dx *= -1;
       }
       else{
+        x = 0;
         dx = random(5,10);
       }
     }
