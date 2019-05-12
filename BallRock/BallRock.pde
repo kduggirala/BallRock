@@ -56,13 +56,13 @@ public class LivingRock extends Rock implements Moveable {
   float r;
   LivingRock(float x, float y) {
     super(x, y);
-    r = dist(x, y, height/2, width/2);
     xd = yd =  10;
+    r = random(100) + 50;
     t = 0;
     movement = "circle";
   }
   @Override
-    void display() {
+  void display() {
     super.display();
     fill(255, 100, 0);
     rect(x + 10, y + 10, 7, 10);
@@ -70,7 +70,7 @@ public class LivingRock extends Rock implements Moveable {
     line(x + 15, y + 40, x + 35, y + 40);
   }
   void move() {
-    if (movement == "bounce") {
+    if (movement == "lines") {
       if (x >= width - 35|| x <= 0) {
         xd *= -1;
       }
@@ -81,9 +81,9 @@ public class LivingRock extends Rock implements Moveable {
       y += yd;
     }
     if (movement == "circle") {
-      float t = millis()/1000.0f;
-      x = (int)(50+r*cos(t));
-      y = (int)(50+r*sin(t));
+      x = (int)(height / 2 +r*sin(t));
+      y = (int)(width / 2 -r*cos(t));
+      t += 0.05;
     }
   }
 }
