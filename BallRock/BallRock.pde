@@ -1,3 +1,5 @@
+PImage img1;
+PImage img2;
 interface Displayable {
   void display();
 }
@@ -24,9 +26,9 @@ class Rock extends Thing implements Collideable {
   Rock(float x, float y) {
     super(x, y);
     if ((int) random (2) == 1) {
-      img = loadImage("ro.jpg");
+      img = img1;
     } else {
-      img = loadImage("rock.jpg");
+      img = img2;
     }
   }
 
@@ -56,6 +58,7 @@ public class LivingRock extends Rock implements Moveable {
   float r;
   LivingRock(float x, float y) {
     super(x, y);
+    
     xd = yd =  10;
     r = random(100) + 50;
     t = 0;
@@ -84,6 +87,9 @@ public class LivingRock extends Rock implements Moveable {
       x = (int)(height / 2 +r*sin(t));
       y = (int)(width / 2 -r*cos(t));
       t += 0.05;
+    }
+    else {
+      
     }
   }
 }
@@ -192,7 +198,8 @@ ArrayList<Collideable> ListOfCollideables;
 
 void setup() {
   size(1000, 800);
-
+  img1 = loadImage("ro.jpg");
+  img2 = loadImage("rock.jpg");
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
   ListOfCollideables = new ArrayList<Collideable>();
