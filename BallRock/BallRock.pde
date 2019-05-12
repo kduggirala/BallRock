@@ -54,15 +54,15 @@ class Rock extends Thing implements Collideable {
 public class LivingRock extends Rock implements Moveable {
   int xd, yd;
   String movement;
-  float t;
-  float r;
+  float t,r, speed;
   LivingRock(float x, float y) {
     super(x, y);
     
     xd = yd =  10;
     r = random(100) + 50;
     t = 0;
-    movement = "circle";
+    speed = 0;
+    movement = "up and down";
   }
   @Override
   void display() {
@@ -73,7 +73,7 @@ public class LivingRock extends Rock implements Moveable {
     line(x + 15, y + 40, x + 35, y + 40);
   }
   void move() {
-    if (movement == "lines") {
+    if (movement.equals("lines")) {
       if (x >= width - 35|| x <= 0) {
         xd *= -1;
       }
@@ -83,13 +83,29 @@ public class LivingRock extends Rock implements Moveable {
       x += xd;
       y += yd;
     }
-    if (movement == "circle") {
-      x = (int)(height / 2 +r*sin(t));
-      y = (int)(width / 2 -r*cos(t));
+    else if (movement.equals("circle")) {
+      x = (int)(height / 2 + r*sin(t));
+      y = (int)(width / 2 - r*cos(t));
       t += 0.05;
     }
-    else {
+    else if (movement.equals("up and down")){
+      if (x >= width - 35|| x <= 0) {
+        xd *= -1;
+      }
+
+      x += xd;
+      y += yd / 3;
       
+      if (t == 10) {  
+        if ((int) random(2) == 1) {
+          y = height / 3;
+        }
+        else {
+          y  = 2 * height / 3;
+        }
+        t = 0;
+      }
+      t += 0.5;
     }
   }
 }
