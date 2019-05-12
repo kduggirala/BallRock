@@ -57,12 +57,21 @@ public class LivingRock extends Rock implements Moveable {
   float t,r, speed;
   LivingRock(float x, float y) {
     super(x, y);
-    
+    int choice = (int) random(3);
     xd = yd =  10;
     r = random(100) + 50;
     t = 0;
     speed = 0;
-    movement = "up and down";
+    switch (choice) {
+      case 0:
+        movement = "lines";
+        break;
+      case 1:
+        movement = "circle";
+        break;
+      default:
+        movement = "up and down";
+    }
   }
   @Override
   void display() {
