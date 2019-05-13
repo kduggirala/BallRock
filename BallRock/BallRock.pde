@@ -125,6 +125,8 @@ class Ball extends Thing implements Moveable {
   PVector acceleration;
   float maxheight = height * 0.2;
   float radius;
+  float degree;
+  float turn;
   String colur;
 
   Ball(float x, float y) {
@@ -133,6 +135,8 @@ class Ball extends Thing implements Moveable {
       colur = "red";
     } else {
       colur = "blue";
+      degree = random(0, 360);
+      turn = random(.1, 1.0);
     }
     position = new PVector(random(100, 800), random(100, 800));
     velocity = new PVector(random(2, 5), random(2, 5));
@@ -144,9 +148,16 @@ class Ball extends Thing implements Moveable {
     if (colur == "red") {
       fill(255, 0, 0);
       ellipse(position.x, position.y, radius, radius);
-    } else {
+    } else {/*
       fill(0, 0, 255);
       ellipse(position.x, position.y, radius, radius);
+      */fill(155, 155, 255);
+      arc(position.x, position.y, radius, radius, radians(degree), radians(120+degree));
+      fill(0, 0, 255);
+      arc(position.x, position.y, radius, radius, radians(120+degree), radians(240+degree));
+      fill(0, 0, 125);
+      arc(position.x, position.y, radius, radius, radians(240+degree), radians(240+degree)+2*THIRD_PI);
+      degree += turn;
     }
   }
 
@@ -159,6 +170,7 @@ class Ball extends Thing implements Moveable {
     velocity.add(acceleration);
     if ((position.x > width) || (position.x < 0)) {
       velocity.x = velocity.x * -1;
+      turn *= -1;
     }
     if (position.y > height) {
       velocity.y = velocity.y * -0.95; 
@@ -176,7 +188,7 @@ class colorChangingBall extends Ball {
   }
 
   void display() {
-    fill(255,0,0);
+    //fill(255,0,0);
     for ( Collideable c : ListOfCollideables) {
       if ( c.isTouching(this)) {
         changecolor();
@@ -199,7 +211,7 @@ class sizeChangingBall extends Ball {
   }
 
   void display() {
-    fill(255,0,0);
+    //fill(255,0,0);
     for ( Collideable c : ListOfCollideables) {
       if ( c.isTouching(this)) {
         if (radius > 50) {
