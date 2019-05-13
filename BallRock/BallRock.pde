@@ -189,7 +189,10 @@ class colorBall extends Ball {
 
   void changecol() {
     fill(0, 255, 56);
-    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
+    rect(position.x + 2, position.y, radius * 0.5, radius* 0.5);
+    rect(position.x - 2, position.y, radius * 0.5, radius* 0.5);
+    rect(position.x, position.y + 2, radius * 0.5, radius* 0.5);
+    rect(position.x, position.y - 2, radius * 0.5, radius* 0.5);
   }
 
   boolean isTouching(Thing other) {
@@ -208,7 +211,12 @@ class Ball2 extends Ball {
     fill(80, 208, 255);
     ellipse(x, y, radius * 0.5, radius* 0.5);
   }
-
+  
+  void changecol() {
+    fill(255, 96, 208);
+    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
+  }
+  
   void move() {
     if (y <= 0 || height <= y) {
       if (dy > 0) {
