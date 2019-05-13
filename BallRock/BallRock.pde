@@ -138,8 +138,6 @@ class Ball extends Thing implements Moveable, Collideable, Displayable {
   }  
 
   void changecol() {
-    fill(255, 0, 0);
-    ellipse(position.x, position.y, radius*1.5, radius*1.5);
   }
 
   void display() {
@@ -189,10 +187,10 @@ class colorBall extends Ball {
 
   void changecol() {
     fill(0, 255, 56);
-    rect(position.x + 2, position.y, radius * 0.5, radius* 0.5);
-    rect(position.x - 2, position.y, radius * 0.5, radius* 0.5);
-    rect(position.x, position.y + 2, radius * 0.5, radius* 0.5);
-    rect(position.x, position.y - 2, radius * 0.5, radius* 0.5);
+    rect(position.x - radius * 0.3, position.y, radius * 0.5, radius* 0.5);
+    rect(position.x + radius * 0.3, position.y, radius * 0.5, radius* 0.5);
+    rect(position.x, position.y + radius * 0.3, radius * 0.5, radius* 0.5);
+    rect(position.x, position.y - radius * 0.3, radius * 0.5, radius* 0.75);
   }
 
   boolean isTouching(Thing other) {
@@ -209,29 +207,29 @@ class Ball2 extends Ball {
 
   void display() {
     fill(80, 208, 255);
-    ellipse(x, y, radius * 0.5, radius* 0.5);
+    ellipse(x, y, radius * 0.6, radius* 0.6);
   }
-  
+
   void changecol() {
     fill(255, 96, 208);
-    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
+    triangle(x - 12, y - 12, x + 0.6 * radius -12, y - 12,(2*x+0.6*radius)/2 -12, y + 0.5*radius - 12);
   }
-  
+
   void move() {
     if (y <= 0 || height <= y) {
       if (dy > 0) {
-        dy = random(5, 10);
+        dy = random(5, 7);
         dy *= -1;
       } else {
-        dy = random(5, 10);
+        dy = random(5, 7);
       }
     }
     if (x >= width || x <= 0) {
       if (dx > 0) {
-        dx = random(5, 10);
+        dx = random(5, 7);
         dx *= -1;
       } else {
-        dx = random(5, 10);
+        dx = random(5, 7);
       }
     }
     x += dx;
@@ -239,7 +237,7 @@ class Ball2 extends Ball {
   }
 
   boolean isTouching(Thing other) {
-    return (dist(position.x, position.y, other.x, other.y) < 3 * radius);
+    return (dist(x, y, other.x, other.y) < 1 * radius);
   }
 }
 
@@ -268,6 +266,7 @@ void setup() {
     Ball b1 = new Ball2(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b1);
     thingsToMove.add(b1);
+    ListOfCollideables.add(b1);
   }
   for (int i = 0; i < 10; i++) {
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
