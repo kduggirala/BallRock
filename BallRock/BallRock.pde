@@ -54,7 +54,7 @@ class Rock extends Thing implements Collideable {
 public class LivingRock extends Rock implements Moveable {
   int xd, yd;
   String movement;
-  float t,r, speed;
+  float t, r, speed;
   LivingRock(float x, float y) {
     super(x, y);
     int choice = (int) random(3);
@@ -63,18 +63,18 @@ public class LivingRock extends Rock implements Moveable {
     t = 0;
     speed = 0;
     switch (choice) {
-      case 0:
-        movement = "lines";
-        break;
-      case 1:
-        movement = "circle";
-        break;
-      default:
-        movement = "up and down";
+    case 0:
+      movement = "lines";
+      break;
+    case 1:
+      movement = "circle";
+      break;
+    default:
+      movement = "up and down";
     }
   }
   @Override
-  void display() {
+    void display() {
     super.display();
     fill(255, 100, 0);
     rect(x + 10, y + 10, 7, 10);
@@ -91,25 +91,22 @@ public class LivingRock extends Rock implements Moveable {
       }
       x += xd;
       y += yd;
-    }
-    else if (movement.equals("circle")) {
+    } else if (movement.equals("circle")) {
       x = (int)(height / 2 + r*sin(t));
       y = (int)(width / 2 - r*cos(t));
       t += 0.05;
-    }
-    else if (movement.equals("up and down")){
+    } else if (movement.equals("up and down")) {
       if (x >= width - 35|| x <= 0) {
         xd *= -1;
       }
 
       x += xd;
       y += yd / 3;
-      
+
       if (t == 10) {  
         if ((int) random(2) == 1) {
           y = height / 3;
-        }
-        else {
+        } else {
           y  = 2 * height / 3;
         }
         t = 0;
@@ -119,35 +116,43 @@ public class LivingRock extends Rock implements Moveable {
   }
 }
 
-class Ball extends Thing implements Moveable {
+class Ball extends Thing implements Moveable, Collideable {
   PVector position;
   PVector velocity;
   PVector acceleration;
-  float maxheight = height * 0.2;
   float radius;
-  String colur;
+  boolean movetype;
+  float t, r;
 
   Ball(float x, float y) {
     super(x, y);
-    if ((int) random (2) == 1) {
-      colur = "red";
-    } else {
-      colur = "blue";
-    }
     position = new PVector(random(100, 800), random(100, 800));
     velocity = new PVector(random(2, 5), random(2, 5));
     acceleration = new PVector(0, random(0.1, 0.3)); // no x acc
     radius = 50; // initial radius
+  }  
+
+  void changecolor() {
+    fill(255, 0, 0);
+    ellipse(position.x, position.y, radius, radius);
   }
 
   void display() {
-    if (colur == "red") {
-      fill(255, 0, 0);
-      ellipse(position.x, position.y, radius, radius);
-    } else {
-      fill(0, 0, 255);
-      ellipse(position.x, position.y, radius, radius);
-    }
+    fill(0, 0, 0);
+    ellipse(position.x, position.y, radius, radius);
+  }
+
+  void move() {
+  }
+
+  boolean isTouching(Thing other) {
+    return (dist(position.x, position.y, other.x, other.y) < 2 * radius);
+  }
+}
+
+class Bouncyball extends Ball {
+  Bouncyball(float x, float y) {
+    super(x, y);
   }
 
   void move() {
@@ -157,9 +162,11 @@ class Ball extends Thing implements Moveable {
   void bounce() {
     position.add(velocity);
     velocity.add(acceleration);
-    if ((position.x > width) || (position.x < 0)) {
+
+    if (position.x > width || position.x < 0) {
       velocity.x = velocity.x * -1;
     }
+
     if (position.y > height) {
       velocity.y = velocity.y * -0.95; 
       position.y = height;
@@ -167,53 +174,19 @@ class Ball extends Thing implements Moveable {
   }
 }
 
-class colorChangingBall extends Ball {
-  colorChangingBall(float x, float y) {
-    super(x, y);
-  }
-  void changecolor() {
-    fill(0, 0, 0);
-  }
+//class Ball2 extends Ball{
+//  Ball2(float x, float y){
+//    super(x,y);
+//  }
+  
+//  void display(){
+//    fill(255,0,0);
+//    ellipse(position.x, position.y, radius, radius);
+    
+  
+//}
 
-  void display() {
-    fill(255,0,0);
-    for ( Collideable c : ListOfCollideables) {
-      if ( c.isTouching(this)) {
-        changecolor();
-        ellipse(position.x, position.y, radius, radius);
-      } else {
-        super.display();
-      }
-    }
-  }
-}
 
-class sizeChangingBall extends Ball {      
-  float var = random(10, 50);
-  float var2 = random(50, 90);
-  sizeChangingBall(float x, float y) {
-    super(x, y);
-  }
-  void move() {
-    super.move();
-  }
-
-  void display() {
-    fill(255,0,0);
-    for ( Collideable c : ListOfCollideables) {
-      if ( c.isTouching(this)) {
-        if (radius > 50) {
-          fill(0, 192, 0);
-          ellipse(position.x, position.y, var, var);
-        } else {
-          ellipse(position.x, position.y, var2, var2);
-        }
-      } else {
-        super.display();
-      }
-    }
-  }
-}
 
 /*DO NOT EDIT THE REST OF THIS */
 
@@ -229,12 +202,12 @@ void setup() {
   thingsToMove = new ArrayList<Moveable>();
   ListOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 5; i++) {
-    Ball b = new colorChangingBall(50+random(width-100), 50+random(height-100));
+    Ball b = new Bouncyball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
-    Ball b1 = new sizeChangingBall(50+random(width-100), 50+random(height-100));
-    thingsToDisplay.add(b1);
-    thingsToMove.add(b1);
+    Ball b = new Ball2(50+random(width-100), 50+random(height-100));
+    thingsToDisplay.add(b);
+    thingsToMove.add(b);
   }
   for (int i = 0; i < 10; i++) {
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
@@ -254,6 +227,7 @@ void draw() {
   for (Displayable thing : thingsToDisplay) {
     thing.display();
   }
+
   for (Moveable thing : thingsToMove) {
     thing.move();
   }
