@@ -10,15 +10,17 @@ interface Moveable {
 
 interface Collideable {
   boolean isTouching(Thing other);
+  void changecolor();
 }
 
-abstract class Thing implements Displayable {
+abstract class Thing implements Displayable, Collideable {
   float x, y;//Position of the Thing
   Thing(float x, float y) {
     this.x = x;
     this.y = y;
   }
   abstract void display();
+  abstract void move();
 }
 
 class Rock extends Thing implements Collideable {
@@ -31,7 +33,8 @@ class Rock extends Thing implements Collideable {
       img = img2;
     }
   }
-
+  void move() {
+  };
   void display() { 
     /* ONE PERSON WRITE THIS */
     /*fill(0,200,30);
@@ -42,6 +45,11 @@ class Rock extends Thing implements Collideable {
      line(x + 15, y + 40, x + 35, y + 40);
      */
     image(img, x, y, 50, 50);
+  }
+
+  void changecolor() {
+    fill(0, 255, 0);
+    rect(x+10, y+10, 7, 16);
   }
 
   boolean isTouching(Thing other) {
@@ -116,7 +124,7 @@ public class LivingRock extends Rock implements Moveable {
   }
 }
 
-class Ball extends Thing implements Moveable, Collideable {
+class Ball extends Thing implements Moveable, Collideable, Displayable {
   PVector position;
   PVector velocity;
   PVector acceleration;
@@ -134,19 +142,19 @@ class Ball extends Thing implements Moveable, Collideable {
 
   void changecolor() {
     fill(255, 0, 0);
-    ellipse(position.x, position.y, radius, radius);
+    ellipse(position.x, position.y, radius*1.5, radius*1.5);
   }
 
   void display() {
     fill(0, 0, 0);
-    ellipse(position.x, position.y, radius, radius);
+    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
   }
 
   void move() {
   }
 
   boolean isTouching(Thing other) {
-    return (dist(position.x, position.y, other.x, other.y) < 2 * radius);
+    return (dist(position.x, position.y, other.x, other.y) < 1.5 * radius);
   }
 }
 
@@ -172,20 +180,22 @@ class Bouncyball extends Ball {
       position.y = height;
     }
   }
+
+  void display() {
+    fill(0, 0, 0);
+    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
+  }
+
+
+  void changecolor() {
+    fill(0, 255, 56);
+    ellipse(position.x, position.y, radius * 1.5, radius* 1.5);
+  }
+
+  boolean isTouching(Thing other) {
+    return (dist(position.x, position.y, other.x, other.y) < 1.5 * radius);
+  }
 }
-
-//class Ball2 extends Ball{
-//  Ball2(float x, float y){
-//    super(x,y);
-//  }
-  
-//  void display(){
-//    fill(255,0,0);
-//    ellipse(position.x, position.y, radius, radius);
-    
-  
-//}
-
 
 
 /*DO NOT EDIT THE REST OF THIS */
@@ -193,6 +203,7 @@ class Bouncyball extends Ball {
 ArrayList<Displayable> thingsToDisplay;
 ArrayList<Moveable> thingsToMove;
 ArrayList<Collideable> ListOfCollideables;
+ArrayList<Thing> holder;
 
 void setup() {
   size(1000, 800);
@@ -201,24 +212,28 @@ void setup() {
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
   ListOfCollideables = new ArrayList<Collideable>();
+  holder = new ArrayList<Thing>();
   for (int i = 0; i < 5; i++) {
     Ball b = new Bouncyball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
-    Ball b = new Ball2(50+random(width-100), 50+random(height-100));
-    thingsToDisplay.add(b);
-    thingsToMove.add(b);
+    ListOfCollideables.add(b);
+    //Ball b = new Ball2(50+random(width-100), 50+random(height-100));
+    //thingsToDisplay.add(b);
+    //thingsToMove.add(b);
   }
   for (int i = 0; i < 10; i++) {
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
     ListOfCollideables.add(r);
+    holder.add(r);
   }
 
   LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100));
   thingsToDisplay.add(m);
   thingsToMove.add(m);
   ListOfCollideables.add(m);
+  holder.add(m);
 }
 
 void draw() {
@@ -230,5 +245,13 @@ void draw() {
 
   for (Moveable thing : thingsToMove) {
     thing.move();
+  }
+  for (Thing thing : holder) {
+    for (Collideable collide : ListOfCollideables) {
+      if (collide.isTouching(thing)) {
+        collide.changecolor();
+      } else {
+      }
+    }
   }
 }
